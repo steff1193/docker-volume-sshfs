@@ -134,7 +134,7 @@ func (d *sshfsDriver) mountVolume(name, destination string) error {
 	} else {
 		return fmt.Errorf("invalid name, use [user@]host#[dir]")
 	}
-	cmd := fmt.Sprintf("sshfs %s  %s", name, destination)
+	cmd := fmt.Sprintf("echo \"sshfs#%s %s fuse rw,nosuid,nodev,relatime,user_id=0,group_id=0,max_read=65536\" >> /etc/fstab; nohup mount -a &", name, destination)
 	return exec.Command("sh", "-c", cmd).Run()
 }
 
